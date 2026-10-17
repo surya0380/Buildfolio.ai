@@ -36,7 +36,7 @@ export function AppContextProvider({ children }) {
             navigate("/")
         } catch (error) {
             console.error("login failed with: ", error);
-            const errMsg = error?.response?.data?.error || "Invlaid credentials"
+            const errMsg = error?.response?.data?.error || "Invalid credentials"
             toast.error(errMsg);
             throw new Error(errMsg)
         }

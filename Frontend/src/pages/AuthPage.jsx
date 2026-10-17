@@ -28,11 +28,11 @@ const AuthPage = ({ mode }) => {
             if (mode === "login") {
                 await login(userDetails.email, userDetails.password);
             } else {
-                await register(...userDetails)
+                await register(userDetails.name, userDetails.email, userDetails.password)
             }
             navigate("/")
         } catch (error) {
-            setError(error.message || (mode === "login" ? "Invalid credentials" : "registation failed"))
+            setError(error.message || (mode === "login" ? "Invalid credentials" : "Registration failed"))
         } finally {
             setLoading(false)
         }
@@ -64,7 +64,7 @@ const AuthPage = ({ mode }) => {
                                 <label className='block text-[11px] font-semibold text-zinc-400 uppercase tracking-widest mb-2'>
                                     Full Name
                                 </label>
-                                <input type="text" value={userDetails.name} onChange={e => setUserDetails(e.target.value)} required
+                                <input type="text" value={userDetails.name} onChange={e => setUserDetails(prev => ({ ...prev, name: e.target.value }))} required
                                     className='w-full pl-2 py-2 border-b border-zinc-200 focus:outline-none focus:border-zinc-950 text-sm
                                  text-zinc-900 bg-transparent placeholder-zinc-300 transition-colors' placeholder='Surya Bharadhwaj' />
                             </div>
@@ -73,7 +73,7 @@ const AuthPage = ({ mode }) => {
                             <label className='block text-[11px] font-semibold text-zinc-400 uppercase tracking-widest mb-2'>
                                 Email Address
                             </label>
-                            <input type="text" value={userDetails.email} onChange={e => setUserDetails(e.target.value)} required
+                            <input type="email" value={userDetails.email} onChange={e => setUserDetails(prev => ({ ...prev, email: e.target.value }))} required
                                 className='w-full pl-2 py-2 border-b border-zinc-200 focus:outline-none focus:border-zinc-950 text-sm
                                  text-zinc-900 bg-transparent placeholder-zinc-300 transition-colors' placeholder='you@ex.com' />
                         </div>
@@ -82,7 +82,7 @@ const AuthPage = ({ mode }) => {
                                 Password
                             </label>
                             <div className='relative'>
-                                <input type={showPassword ? "text" : "password"} value={userDetails.password} onChange={e => setUserDetails(e.target.value)} required
+                                <input type={showPassword ? "text" : "password"} value={userDetails.password} onChange={e => setUserDetails(prev => ({ ...prev, password: e.target.value }))} required
                                     className='w-full pl-2 py-2 border-b border-zinc-200 focus:outline-none focus:border-zinc-950 text-sm
                                  text-zinc-900 bg-transparent placeholder-zinc-300 pr-8' placeholder='xxxxxxxxx' />
                                 <button type='button' onClick={() => setShowPassword(!showPassword)} className='absolute right-2 top-1/2 -translate-y-1/2 text-zinc-300
